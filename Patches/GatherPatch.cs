@@ -1,6 +1,7 @@
 ﻿using HarmonyLib;
 using SodaDen.Pacha;
 using System.Collections.Generic;
+using System.Numerics;
 using System.Reflection;
 using System.Reflection.Emit;
 using UnityEngine;
@@ -8,23 +9,23 @@ using UnityEngine;
 namespace UsefullPatches.Patches
 {
     [HarmonyPatch(typeof(CaveOreShim), "SpawnMineralOnHealth0")]
-    internal class OrePatch
+    internal class OreYieldPatch
     {
         [HarmonyPostfix]
-        public static void Postfix(CaveOreShim __instance)
+        public static void Postfix(CaveOreShim __instance, ref Transform ___center)
         {
             int count = ConfigManager.MineralYield!.Value;
             if (__instance.Mineral != null)
             {
                 for(int i = 0; i < count; i++)
                 {
-                    Transform center = (Transform)AccessTools.Field(typeof(CaveOreShim), "center").GetValue(__instance);
+                    //Transform center = (Transform)AccessTools.Field(typeof(CaveOreShim), "center").GetValue(__instance);
                     MagneticItemData entity = new MagneticItemData
                     {
                         ID = __instance.ID + $"-{100 + i}",
                         ItemWithProperties = __instance.Mineral,
-                        FromPosition = (UnityEngine.Vector2)center.position,
-                        ToPosition = SpawnBehaviorUtils.GetDistanceForBounce(center.position, SpawnBehavior.BounceShort),
+                        FromPosition = (UnityEngine.Vector2)___center.position,
+                        ToPosition = SpawnBehaviorUtils.GetDistanceForBounce(___center.position, SpawnBehavior.BounceShort),
                         SpawnBehavior = SpawnBehavior.BounceShort,
                         Q = 1,
                         Source = ItemObtainedSource.Picked
@@ -40,6 +41,54 @@ namespace UsefullPatches.Patches
                 if (ConfigManager.EnableLogging!.Value)
                 {
                     UsefullPatchesMain.Log?.LogInfo("MineralYield: Mineral was null!");
+                }
+            }
+        }
+    }
+
+    [HarmonyPatch(typeof(TreeEntity), "GenerateWood")]
+    internal class WoodYieldPatch
+    {
+        [HarmonyPostfix]
+        public static void Postfix(TreeEntity __instance, ref bool stump, ref TreeRenderer ___treeRenderer)
+        {
+            int count = 10;
+            if (__instance.Tree.TreeType.WoodItem != null && stump != true)
+            {
+                InventoryItem inventoryItem = __instance.Tree.TreeType.WoodItem;
+                UnityEngine.Vector2 vector = ___treeRenderer.transform.position;
+
+                for (int i = 0; i < count; i++)
+                {
+                    UnityEngine.Vector2 validDistanceForBounce = SpawnBehaviorUtils.GetValidDistanceForBounce(vector, SpawnBehavior.BounceShort);
+                    MagneticItemData entity = new MagneticItemData
+                    {
+                        ID = __instance.EntityID + (100 + i),
+                        ItemWithProperties = inventoryItem,
+                        Visible = true,
+                        FromPosition = vector,
+                        ToPosition = validDistanceForBounce,
+                        SpawnBehavior = SpawnBehavior.BounceShort,
+                        Source = ItemObtainedSource.Picked
+                    };
+                    GenericEntityManager.Instance.LocalInstantiate(entity);
+                }
+                if (ConfigManager.EnableLogging!.Value)
+                {
+                    UsefullPatchesMain.Log?.LogInfo("WoodYield: " + count + " logs spawned!");
+                }
+            }
+            else if (stump == true)
+            {
+                if (ConfigManager.EnableLogging!.Value)
+                {
+                    UsefullPatchesMain.Log?.LogInfo("WoodYield: Item was a stump!");
+                }
+            } else
+            {
+                if (ConfigManager.EnableLogging!.Value)
+                {
+                    UsefullPatchesMain.Log?.LogInfo("WoodYield: WoodItem was null!");
                 }
             }
         }
