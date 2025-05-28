@@ -45,18 +45,24 @@ namespace UsefullPatches
             }
 
             // ### Fishing ###
-            if (ConfigManager.DisableHitModeDetectionBuildUp!.Value)
-            {
-                harmony.PatchAll(typeof(HitModeDetectionChance));
-            }
-
-            if (ConfigManager.EnableInstantHitFish!.Value) {
-                harmony.PatchAll(typeof(HitModeInstantFocusValue));
-            }
-
             if (ConfigManager.EnableInstantHookFish!.Value)
             {
                 harmony.PatchAll(typeof(HookModeInstantPull));
+            }
+
+            if (ConfigManager.HitModeFocusBuildUp!.Value >= 0)
+            {
+                harmony.PatchAll(typeof(HitModeAdjustFocusValue));
+            }
+
+            if (ConfigManager.HitModeTensionBuildUp!.Value >= 0)
+            {
+                harmony.PatchAll(typeof(HitModeAdjustTensionValue));
+            }
+
+            if (ConfigManager.HitModeDetectionBuildUp!.Value >= 0)
+            {
+                harmony.PatchAll(typeof(HitModeAdjustdDetectionValue));
             }
 
             // ### Player ###
@@ -71,7 +77,7 @@ namespace UsefullPatches
             }
 
             // ### Gather ###
-            if(ConfigManager.TreeHitReq!.Value)
+            if (ConfigManager.TreeHitReq!.Value)
             {
                 harmony.PatchAll(typeof(TreeHitPatch));
             }
