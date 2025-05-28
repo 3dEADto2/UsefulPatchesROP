@@ -17,9 +17,10 @@ namespace UsefullPatches
         public static ConfigEntry<bool>? EnableLogging;
 
         // ### Fishing ###
-        public static ConfigEntry<bool>? DisableHitModeDetectionBuildUp;
-        public static ConfigEntry<bool>? EnableInstantHitFish;
         public static ConfigEntry<bool>? EnableInstantHookFish;
+        public static ConfigEntry<float>? HitModeFocusBuildUp;
+        public static ConfigEntry<float>? HitModeTensionBuildUp;
+        public static ConfigEntry<float>? HitModeDetectionBuildUp;
 
         // ### Player ###
         public static ConfigEntry<float>? SpeedMultiplier;
@@ -47,35 +48,36 @@ namespace UsefullPatches
         public static void Init(ConfigFile config)
         {
             // ### General ###
-            EnableMod = config.Bind(cGeneral, "EnableMod", true, "Enable or disable the mod.");
-            EnableLogging = config.Bind(cGeneral, "EnableLogging", false, "Enable logging.");
+            EnableMod = config.Bind(cGeneral, "EnableMod", true, " Enable or disable the mod.");
+            EnableLogging = config.Bind(cGeneral, "EnableLogging", false, " Enable logging.");
 
             // ### Fishing ###
-            DisableHitModeDetectionBuildUp = config.Bind(cFishing, "DisableHitModeDetectionBuildUp", false, "Disables fish detection increase.");
-            EnableInstantHitFish = config.Bind(cFishing, "EnableInstantHitFish", false, "Enable instant catch fish in hit minigame.");
-            EnableInstantHookFish = config.Bind(cFishing, "EnableInstantHookFish", false, "Enable instant catch fish in hook minigame. !!Experimental!!");
+            EnableInstantHookFish = config.Bind(cFishing, "EnableInstantHookFish", false, " Enable instant catch fish in hook minigame. !!Experimental!!");
+            HitModeFocusBuildUp = config.Bind(cFishing, "HitModeFocusBuildUp", -1f, " -1 Disabled.\n 0 Instant Catch.\n value < 1f = slower increase.\n value > 1f = faster.\n Calculation is focusValue * yourValue.\n Use float numbers (1.0).");
+            HitModeTensionBuildUp = config.Bind(cFishing, "HitModeTensionBuildUp", -1f, " -1 Disabled.\n 0 Disable tension build up.\n value < 1f = slower increase.\n value > 1f = faster.\n Calculation is tensionValue * yourValue.\n Use float numbers (1.0).");
+            HitModeDetectionBuildUp = config.Bind(cFishing, "HitModeDetectionBuildUp", -1f, " -1 Disabled.\n 0 Disable detection build up.\n value < 1.0f = slower increase.\n value > 1f = faster.\n Calculation is detectionValue * yourValue.\n Use float numbers (1.0).");
 
             // ### Player ###
-            SpeedMultiplier = config.Bind(cPlayer, "SpeedMultiplier", -1f, "-1 Disabled. Speed is multiplied by your value (speed * value). You can use float numbers (1.2).");
-            StaminaConsuption = config.Bind(cPlayer, "StaminaConsumption", -1f, "-1 Disabled. 1 for normal stamina consumption. value < 1 for less consumption (0 for none).\n value > 1 for more consumption. You can use float numbers (1.2).");
+            SpeedMultiplier = config.Bind(cPlayer, "SpeedMultiplier", -1f, " Increase/Decrease player speed.\n -1 Disabled.\n value > 1f = faster.\n value < 1f = slower.\n Calculation is speed * yourValue.\n Use float numbers (1.0).");
+            StaminaConsuption = config.Bind(cPlayer, "StaminaConsumption", -1f, " Increase/Decrease player stamina consumption.\n -1 Disabled.\n 0 for infinte stamina.\n value > 1f = more consumption.\n value < 1f less consumption.\n Calculation is staminaDecrease * yourValue.\n Use float numbers (1.0).");
 
             // ### Gather ###
-            MineralYield = config.Bind(cGather, "MineralYield", -1, "-1 Disabled. Value is how many extra minerals drop. Only int numbers allowed (1)");
-            WoodYield = config.Bind(cGather, "WoodYield", -1, "-1 Disabled. Value is how many extra logs drop. Only int numbers allowed (1)");
-            MineralInstantBreak = config.Bind(cGather, "MineralInstantBreak", false, "Enable instant break for minerals. !!Experimental!!");
-            ToolHardness = config.Bind(cGather, "ToolHardness", -1, "-1 Disabled. Sets the hardness of the tool to your value. Also seems to lead to instant break at value >= 99.");
-            TreeHitReq = config.Bind(cGather, "TreeHitReq", false, "Disable the tool requirement for trees !!Experimental!!");
-            InfiniteWaterTool = config.Bind(cGather, "InfiniteWaterTool", false, "Enable infinte water for watertools.");
+            MineralYield = config.Bind(cGather, "MineralYield", -1, " How many extra minerals drop.\n -1 Disabled.\n Use int numbers (1).");
+            WoodYield = config.Bind(cGather, "WoodYield", -1, " How many extra logs drop.\n -1 Disabled.\n Use int numbers (1).");
+            MineralInstantBreak = config.Bind(cGather, "MineralInstantBreak", false, " Enable instant break for minerals. !!Experimental!!");
+            ToolHardness = config.Bind(cGather, "ToolHardness", -1, " Sets the hardness of tools.\n High numbers lead to instant break/chop.\n -1 Disabled.\n Use int numbers (1).");
+            TreeHitReq = config.Bind(cGather, "TreeHitReq", false, " Disable the tool requirement for trees !!Experimental!!");
+            InfiniteWaterTool = config.Bind(cGather, "InfiniteWaterTool", false, " Enable infinte water for watertools.");
 
             // ### Field ###
-            FieldSpawnResource = config.Bind(cField, "FieldSpawnResource", false, "Disable resource spawn on field. !!experimental!!");
-            FieldSpawnLargeResource = config.Bind(cField, "FieldSpawnLargeResource", false, "Disable large resource spawn on field. !!experimental!!");
-            FieldSpawnTree = config.Bind(cField, "FieldSpawnTree", false, "Disable tree spawn on field. !!experimental!!");
-            FieldSpawnTallGrass = config.Bind(cField, "FieldSpawnTallGrass", false, "Disable tall grass spawn on field. !!experimental!!");
+            FieldSpawnResource = config.Bind(cField, "FieldSpawnResource", false, " Disable resource spawn on field. !!experimental!!");
+            FieldSpawnLargeResource = config.Bind(cField, "FieldSpawnLargeResource", false, " Disable large resource spawn on field. !!experimental!!");
+            FieldSpawnTree = config.Bind(cField, "FieldSpawnTree", false,  "Disable tree spawn on field. !!experimental!!");
+            FieldSpawnTallGrass = config.Bind(cField, "FieldSpawnTallGrass", false, " Disable tall grass spawn on field. !!experimental!!");
 
             // ### NPC ###
-            DisableFriendshipDecay = config.Bind(cNPC, "DisableFriendshipDecay", false, "Disable friendship decay.");
-            FriendshipGain = config.Bind(cNPC, "FriendshipGain", -1f, "-1 Disabled. Multply the friendship gain (value * friendship gain). You can use float numbers (1.2).");      
+            DisableFriendshipDecay = config.Bind(cNPC, "DisableFriendshipDecay", false, " Disable friendship decay.");
+            FriendshipGain = config.Bind(cNPC, "FriendshipGain", -1f, " Increase/Decrease friendship gain.\n -1 Disabled.\n value > 1f = more friendship gain.\n value < 1f = less friendship gain.\n Calculation is friendshipAddValue * yourValue.\n Use float numbers (1.0).");      
         }
     }
 }
