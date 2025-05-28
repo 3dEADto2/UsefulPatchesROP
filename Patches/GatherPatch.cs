@@ -3,9 +3,11 @@ using SodaDen.Pacha;
 using System.Collections.Generic;
 using System.Reflection;
 using System.Reflection.Emit;
+using UnityEngine;
 
 namespace UsefullPatches.Patches
 {
+    /*
     [HarmonyPatch(typeof(CaveOreShim), "get_Q")]
     internal class OrePatch
     {
@@ -18,6 +20,45 @@ namespace UsefullPatches.Patches
                 UsefullPatchesMain.Log?.LogInfo("MineralYield set to " + __result + "!");
             }
             return false;
+        }
+    }
+    */
+
+    [HarmonyPatch(typeof(CaveOreShim), "SpawnMineralOnHealth0")]
+    internal class OrePatch
+    {
+        [HarmonyPostfix]
+        public static void Postfix(CaveOreShim __instance)
+        {
+            int count = ConfigManager.MineralYield!.Value;
+            if (__instance.Mineral != null)
+            {
+                for(int i = 0; i < count; i++)
+                {
+                    Transform center = (Transform)AccessTools.Field(typeof(CaveOreShim), "center").GetValue(__instance);
+                    MagneticItemData entity = new MagneticItemData
+                    {
+                        ID = __instance.ID + $"-{100 + i}",
+                        ItemWithProperties = __instance.Mineral,
+                        FromPosition = (UnityEngine.Vector2)center.position,
+                        ToPosition = SpawnBehaviorUtils.GetDistanceForBounce(center.position, SpawnBehavior.BounceShort),
+                        SpawnBehavior = SpawnBehavior.BounceShort,
+                        Q = 1,
+                        Source = ItemObtainedSource.Picked
+                    };
+                    GenericEntityManager.Instance.LocalInstantiate(entity);
+                }
+                if (ConfigManager.EnableLogging!.Value)
+                {
+                    UsefullPatchesMain.Log?.LogInfo("MineralYield: " + count + " minerals spawned!");
+                }
+            } else
+            {
+                if (ConfigManager.EnableLogging!.Value)
+                {
+                    UsefullPatchesMain.Log?.LogInfo("MineralYield: Mineral was null!");
+                }
+            }
         }
     }
 
