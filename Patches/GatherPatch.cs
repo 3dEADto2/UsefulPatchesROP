@@ -7,23 +7,6 @@ using UnityEngine;
 
 namespace UsefullPatches.Patches
 {
-    /*
-    [HarmonyPatch(typeof(CaveOreShim), "get_Q")]
-    internal class OrePatch
-    {
-        [HarmonyPrefix]
-        public static bool Prefix(ref int __result)
-        {
-            __result = ConfigManager.MineralYield!.Value;
-            if (ConfigManager.EnableLogging!.Value)
-            {
-                UsefullPatchesMain.Log?.LogInfo("MineralYield set to " + __result + "!");
-            }
-            return false;
-        }
-    }
-    */
-
     [HarmonyPatch(typeof(CaveOreShim), "SpawnMineralOnHealth0")]
     internal class OrePatch
     {
@@ -82,7 +65,7 @@ namespace UsefullPatches.Patches
         [HarmonyPrefix]
         public static bool Prefix(ref int __result)
         {
-            __result = 99;
+            __result = ConfigManager.ToolHardness!.Value;
             if (ConfigManager.EnableLogging!.Value)
             {
                 UsefullPatchesMain.Log?.LogInfo("Tool hardness overwritten!");
@@ -113,7 +96,7 @@ namespace UsefullPatches.Patches
         {
             var code = new List<CodeInstruction>(instructions);
 
-            // We'll search for the pattern of the TreeType.Tools.Contains call
+            // search for the pattern of the TreeType.Tools.Contains call
             for (int i = 0; i < code.Count - 5; i++)
             {
                 if (
@@ -128,15 +111,15 @@ namespace UsefullPatches.Patches
                     method.DeclaringType?.FullName?.StartsWith("System.Linq.Enumerable") == true
                 )
                 {
-                    // Replace all 6 instructions with ldc.i4.1
+                    // replace instruction with ldc.i4.1
                     code[i] = new CodeInstruction(OpCodes.Ldc_I4_1);
-                    // Nop the rest of the matched instructions
+                    // nop the rest of the matched instructions
                     for (int j = 1; j <= 5; j++)
                     {
                         code[i + j] = new CodeInstruction(OpCodes.Nop);
                     }
 
-                    // Only replace the first match
+                    // 0nly replace the first match
                     break;
                 }
             }

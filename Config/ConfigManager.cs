@@ -13,7 +13,7 @@ namespace UsefullPatches
         public static ConfigEntry<float>? SpeedMultiplier;
         public static ConfigEntry<int>? MineralYield;
         public static ConfigEntry<bool>? MineralInstantBreak;
-        public static ConfigEntry<bool>? ToolHardness;
+        public static ConfigEntry<int>? ToolHardness;
         public static ConfigEntry<float>? StaminaConsuption;
         public static ConfigEntry<bool>? TreeHitReq;
         public static ConfigEntry<bool>? InfiniteWaterTool;
@@ -34,7 +34,7 @@ namespace UsefullPatches
             SpeedMultiplier = config.Bind("Player", "SpeedMultiplier", -1f, "-1 Disabled. Speed is multiplied by your value (speed * value). You can use float numbers (1.2).");
             MineralYield = config.Bind("Gather", "MineralYield", -1, "-1 Disabled. Value is how many minerals yield. Only int numbers allowed (1)");
             MineralInstantBreak = config.Bind("Gather", "MineralInstantBreak", false, "Enable instant break for minerals. !!Experimental!!");
-            ToolHardness = config.Bind("Gather", "ToolHardness", false, "Sets the hardness of the tool to 99. Also seems to lead to instant break.");
+            ToolHardness = config.Bind("Gather", "ToolHardness", -1, "-1 Disabled. Sets the hardness of the tool to your value. Also seems to lead to instant break at value >= 99.");
             StaminaConsuption = config.Bind("Player", "StaminaConsumption", -1f, "-1 Disabled. 1 for normal stamina consumption. value < 1 for less consumption (0 for none).\n value > 1 for more consumption. You can use float numbers (1.2).");
             TreeHitReq = config.Bind("Gather", "TreeHitReq", false, "Disable the tool requirement for trees !!Experimental!!");
             InfiniteWaterTool = config.Bind("Gather", "InfiniteWaterTool", false, "Enable infinte water for watertools.");
