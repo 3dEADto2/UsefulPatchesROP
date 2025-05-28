@@ -81,19 +81,24 @@ namespace UsefullPatches
                 harmony.PatchAll(typeof(InfiniteWaterTool));
             }
 
-            if (ConfigManager.ToolHardness!.Value)
+            if (ConfigManager.ToolHardness!.Value > 0)
             {
                 harmony.PatchAll(typeof(ToolHardnessPatch));
             }
 
             if (ConfigManager.MineralYield!.Value > 0)
             {
-                harmony.PatchAll(typeof(OrePatch));
+                harmony.PatchAll(typeof(OreYieldPatch));
             }
 
             if (ConfigManager.MineralInstantBreak!.Value)
             {
                 harmony.PatchAll(typeof(OreInstantBreakPatch));
+            }
+
+            if (ConfigManager.WoodYield!.Value > 0)
+            {
+                harmony.PatchAll(typeof(WoodYieldPatch));
             }
 
             // ### Field ###
