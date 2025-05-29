@@ -53,9 +53,9 @@ namespace UsefullPatches
 
             // ### Fishing ###
             EnableInstantHookFish = config.Bind(cFishing, "EnableInstantHookFish", false, " Enable instant catch fish in hook minigame. !!Experimental!!");
-            HitModeFocusBuildUp = config.Bind(cFishing, "HitModeFocusBuildUp", -1f, " -1 Disabled.\n 0 Instant Catch.\n value < 1f = slower increase.\n value > 1f = faster.\n Calculation is focusValue * yourValue.\n Use float numbers (1.0).");
-            HitModeTensionBuildUp = config.Bind(cFishing, "HitModeTensionBuildUp", -1f, " -1 Disabled.\n 0 Disable tension build up.\n value < 1f = slower increase.\n value > 1f = faster.\n Calculation is tensionValue * yourValue.\n Use float numbers (1.0).");
-            HitModeDetectionBuildUp = config.Bind(cFishing, "HitModeDetectionBuildUp", -1f, " -1 Disabled.\n 0 Disable detection build up.\n value < 1.0f = slower increase.\n value > 1f = faster.\n Calculation is detectionValue * yourValue.\n Use float numbers (1.0).");
+            HitModeFocusBuildUp = config.Bind(cFishing, "HitModeFocusBuildUp", -1f, " Adjust hit fishing minigame focus increase.\n -1 Disabled.\n 0 Instant Catch.\n value < 1f = slower increase.\n value > 1f = faster.\n Calculation is focusValue * yourValue.\n Use float numbers (1.0).");
+            HitModeTensionBuildUp = config.Bind(cFishing, "HitModeTensionBuildUp", -1f, " Adjust hit fishing minigame tension increase.\n -1 Disabled.\n 0 Disable tension build up.\n value < 1f = slower increase.\n value > 1f = faster.\n Calculation is tensionValue * yourValue.\n Use float numbers (1.0).");
+            HitModeDetectionBuildUp = config.Bind(cFishing, "HitModeDetectionBuildUp", -1f, " Adjust hit fishing minigame detection increase.\n -1 Disabled.\n 0 Disable detection build up.\n value < 1.0f = slower increase.\n value > 1f = faster.\n Calculation is detectionValue * yourValue.\n Use float numbers (1.0).");
 
             // ### Player ###
             SpeedMultiplier = config.Bind(cPlayer, "SpeedMultiplier", -1f, " Increase/Decrease player speed.\n -1 Disabled.\n value > 1f = faster.\n value < 1f = slower.\n Calculation is speed * yourValue.\n Use float numbers (1.0).");
