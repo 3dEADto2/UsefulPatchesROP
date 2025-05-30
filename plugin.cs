@@ -50,6 +50,13 @@ namespace UsefullPatches
                 harmony.PatchAll(typeof(AnimalDailyFriendshipPatch));
             }
 
+            if (ConfigManager.DisableAnimalSickness!.Value)
+            {
+                harmony.PatchAll(typeof(AnimalSicknessPatch));
+            }
+
+            harmony.PatchAll(typeof(AnimalSicknessPatch));
+
             // ### Fishing ###
             if (ConfigManager.EnableInstantHookFish!.Value)
             {

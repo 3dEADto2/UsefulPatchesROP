@@ -13,13 +13,28 @@ namespace UsefullPatches.Patches
             {    
                 return true;
             }
-
-            __instance.ChangeFriendship(1000);
+            int configValue = ConfigManager.AnimalDailyFriendshipGain!.Value;
+            __instance.ChangeFriendship(configValue);
             if (ConfigManager.EnableLogging!.Value)
             {
-                UsefullPatchesMain.Log?.LogInfo("AnimalDailyFriendshipPatch: Added " + 1000 + " friendship to animal!");
+                UsefullPatchesMain.Log?.LogInfo("AnimalDailyFriendshipPatch: Added " + configValue + " friendship to animal!");
             }
             return false;
+        }
+    }
+
+    [HarmonyPatch(typeof(AnimalEntity), "set_Sickness")]
+    internal class AnimalSicknessPatch
+    {
+        [HarmonyPrefix]
+        public static bool Prefix(ref AnimalSickness value)
+        {
+            value = AnimalSickness.None;
+            if (ConfigManager.EnableLogging!.Value)
+            {
+                UsefullPatchesMain.Log?.LogInfo("AnimalSicknessPatch: Sickness set to none!");
+            }
+            return true;
         }
     }
 }
