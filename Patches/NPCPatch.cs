@@ -4,17 +4,22 @@ using System;
 
 namespace UsefullPatches.Patches
 {
-    [HarmonyPatch(typeof(Friendship), "UpdateFriendship")]
+    [HarmonyPatch(typeof(NPCController), "UpdateFriendship")]
     internal class FriendshipPatch
     {
         [HarmonyPrefix]
-        public static bool Prefix(ref string with, ref int by)
+        public static bool Prefix(ref string with, ref int by, NPCController __instance)
         {
+            if (by <= 0)
+            {
+                return true;
+            }
+
             int oldBy = by;
             by = (int)Math.Ceiling(by * ConfigManager.FriendshipGain!.Value);
             if (ConfigManager.EnableLogging!.Value)
             {
-                UsefullPatchesMain.Log?.LogInfo("Friendship gain increased from " + oldBy + " to " + by + "!");
+                UsefullPatchesMain.Log?.LogInfo("Friendship gain increased from " + oldBy + " to " + by + " for " + __instance.NPCAsset.Name + "!");
             }
             return true;
         }
