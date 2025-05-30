@@ -15,7 +15,7 @@ namespace UsefullPatches
     {
         private const string pluginGUID = "3dEADto.UsefullPatches";
         private const string pluginName = "Usefull Patches";
-        private const string pluginVersion = "1.2.2";
+        private const string pluginVersion = "1.3.0";
         private readonly Harmony harmony = new Harmony(pluginGUID);
 
         private static UsefullPatchesMain? Instance;
@@ -42,6 +42,12 @@ namespace UsefullPatches
 
             if (Instance == null) { 
                 Instance = this;
+            }
+
+            // ### Animal ###
+            if (ConfigManager.AnimalDailyFriendshipGain!.Value > 0)
+            {
+                harmony.PatchAll(typeof(AnimalDailyFriendshipPatch));
             }
 
             // ### Fishing ###
