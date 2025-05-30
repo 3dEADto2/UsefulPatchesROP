@@ -7,11 +7,18 @@ namespace UsefullPatches.Patches
     internal class FieldSpawnResourcePatch
     {
         [HarmonyPrefix]
-        public static bool Prefix()
+        public static bool Prefix(ref HittableResource resource)
         {
+            if (!ConfigManager.FieldSpawnTallGrass!.Value && resource.Name == "Generic weed" && resource.DontCollide == true)
+            {
+                if (ConfigManager.EnableLogging!.Value) {
+                    UsefullPatchesMain.Log?.LogInfo("Field: ResourceSpawn TallGrass spawned!");
+                }
+                return true;
+            }
             if (ConfigManager.EnableLogging!.Value)
             {
-                UsefullPatchesMain.Log?.LogInfo("Field: ResourceSpawn denied!");
+                UsefullPatchesMain.Log?.LogInfo("Field: ResourceSpawn " + resource.Name + " denied!");
             }
             return false;
         }
@@ -21,8 +28,9 @@ namespace UsefullPatches.Patches
     internal class FieldSpawnTreePatch
     {
         [HarmonyPrefix]
-        public static bool Prefix()
+        public static bool Prefix(ref bool __result)
         {
+            __result = false;
             if (ConfigManager.EnableLogging!.Value)
             {
                 UsefullPatchesMain.Log?.LogInfo("Field: TreeSpawn denied!");
@@ -35,8 +43,9 @@ namespace UsefullPatches.Patches
     internal class FieldSpawnLargeResourcePatch
     {
         [HarmonyPrefix]
-        public static bool Prefix()
+        public static bool Prefix(ref bool __result)
         {
+            __result = false;
             if (ConfigManager.EnableLogging!.Value)
             {
                 UsefullPatchesMain.Log?.LogInfo("Field: LargeResourceSpawn denied!");
