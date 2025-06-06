@@ -10,7 +10,7 @@ namespace UsefullPatches.Patches
         public static void Postfix(AnimalEntity __instance)
         {
             int configValue = 0;
-            string animal = "animal";
+            string animal = "undefined animal";
 
             if (!(__instance.IsTamed || __instance.IsPet) || __instance.IsBreeding)
             {
@@ -20,12 +20,18 @@ namespace UsefullPatches.Patches
             if (__instance.IsTamed && ConfigManager.AnimalDailyFriendshipGain!.Value > 0)
             {
                 configValue = ConfigManager.AnimalDailyFriendshipGain!.Value;
+                animal = "tamed animal";
             }
 
             if (__instance.IsPet && ConfigManager.PetDailyFriendshipGain!.Value > 0)
             {
                 configValue = ConfigManager.PetDailyFriendshipGain!.Value;
                 animal = "pet";
+            }
+
+            if (configValue <= 0)
+            {
+                return;
             }
 
             __instance.ChangeFriendship(configValue);
