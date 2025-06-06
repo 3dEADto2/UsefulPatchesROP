@@ -19,6 +19,7 @@ namespace UsefullPatches
 
         // ### Animal ###
         public static ConfigEntry<int>? AnimalDailyFriendshipGain;
+        public static ConfigEntry<int>? PetDailyFriendshipGain;
         public static ConfigEntry<bool>? DisableAnimalSickness;
 
         // ### Fishing ###
@@ -58,6 +59,7 @@ namespace UsefullPatches
 
             // ### Animal ###
             AnimalDailyFriendshipGain = config.Bind(cAnimal, "AnimalDailyFriendshipGain", -1, " Adds daily friendship gain to animals.\n value of 20 would be equal to feeding the animals with grain\n -1 Disabled.\n Use int numbers (1).");
+            PetDailyFriendshipGain = config.Bind(cAnimal, "PetDailyFriendshipGain", -1, " Adds daily friendship gain to animals.\n value of 20 would be equal to feeding a animal with grain\n -1 Disabled.\n Use int numbers (1).");
             DisableAnimalSickness = config.Bind(cAnimal, "DisableAnimalSickness", false, " Disable animal sickness. !!Experimental!!");
 
             // ### Fishing ###

@@ -45,7 +45,7 @@ namespace UsefullPatches
             }
 
             // ### Animal ###
-            if (ConfigManager.AnimalDailyFriendshipGain!.Value > 0)
+            if (ConfigManager.AnimalDailyFriendshipGain!.Value > 0 || ConfigManager.PetDailyFriendshipGain!.Value > 0)
             {
                 harmony.PatchAll(typeof(AnimalDailyFriendshipPatch));
             }
