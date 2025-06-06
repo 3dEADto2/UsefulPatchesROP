@@ -6,20 +6,39 @@ namespace UsefullPatches.Patches
     [HarmonyPatch(typeof(AnimalEntity), "UpdateFriendshipAtStartOfDay")]
     internal class AnimalDailyFriendshipPatch
     {
-        [HarmonyPrefix]
-        public static bool Prefix(AnimalEntity __instance)
+        [HarmonyPostfix]
+        public static void Postfix(AnimalEntity __instance)
         {
-            if (!__instance.IsTamed || __instance.IsBreeding)
-            {    
-                return true;
+            int configValue = 0;
+            string animal = "undefined animal";
+
+            if (!(__instance.IsTamed || __instance.IsPet) || __instance.IsBreeding)
+            {
+                return;
             }
-            int configValue = ConfigManager.AnimalDailyFriendshipGain!.Value;
+
+            if (__instance.IsTamed && ConfigManager.AnimalDailyFriendshipGain!.Value > 0)
+            {
+                configValue = ConfigManager.AnimalDailyFriendshipGain!.Value;
+                animal = "tamed animal";
+            }
+
+            if (__instance.IsPet && ConfigManager.PetDailyFriendshipGain!.Value > 0)
+            {
+                configValue = ConfigManager.PetDailyFriendshipGain!.Value;
+                animal = "pet";
+            }
+
+            if (configValue <= 0)
+            {
+                return;
+            }
+
             __instance.ChangeFriendship(configValue);
             if (ConfigManager.EnableLogging!.Value)
             {
-                UsefullPatchesMain.Log?.LogInfo("AnimalDailyFriendshipPatch: Added " + configValue + " friendship to animal!");
+                UsefullPatchesMain.Log?.LogInfo("AnimalDailyFriendshipPatch: Added " + configValue + " friendship to " + animal + "!");
             }
-            return false;
         }
     }
 

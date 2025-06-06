@@ -8,7 +8,7 @@ namespace UsefullPatches.Patches
     internal class FriendshipPatch
     {
         [HarmonyPrefix]
-        public static bool Prefix(ref string with, ref int by, NPCController __instance)
+        public static bool Prefix(ref string with, ref int by, NPCController __instance, ref Friendship ___friendship)
         {
             if (by <= 0)
             {
@@ -19,6 +19,7 @@ namespace UsefullPatches.Patches
             by = (int)Math.Ceiling(by * ConfigManager.FriendshipGain!.Value);
             if (ConfigManager.EnableLogging!.Value)
             {
+                UsefullPatchesMain.Log?.LogInfo("Current friendship with " + __instance.NPCAsset.Name + " is " + ___friendship.CurrentFriendshipWith(with) + "!");
                 UsefullPatchesMain.Log?.LogInfo("Friendship gain increased from " + oldBy + " to " + by + " for " + __instance.NPCAsset.Name + "!");
             }
             return true;
