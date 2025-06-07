@@ -51,7 +51,7 @@ namespace UsefullPatches.Patches
         [HarmonyPostfix]
         public static void Postfix(TreeEntity __instance, ref bool stump, ref TreeRenderer ___treeRenderer)
         {
-            int count = 10;
+            int count = ConfigManager.WoodYield!.Value;
             if (__instance.Tree.TreeType.WoodItem != null && stump != true)
             {
                 InventoryItem inventoryItem = __instance.Tree.TreeType.WoodItem;
