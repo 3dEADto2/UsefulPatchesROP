@@ -15,7 +15,7 @@ namespace UsefullPatches
     {
         private const string pluginGUID = "3dEADto.UsefullPatches";
         private const string pluginName = "Usefull Patches";
-        private const string pluginVersion = "1.3.2";
+        private const string pluginVersion = "1.4.0";
         private readonly Harmony harmony = new Harmony(pluginGUID);
 
         private static UsefullPatchesMain? Instance;
