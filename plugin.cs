@@ -44,6 +44,12 @@ namespace UsefullPatches
                 Instance = this;
             }
 
+            // ### Shared Patches ###
+            if (ConfigManager.FishingExperienceIncrease!.Value > 0 || ConfigManager.FarmingExperienceIncrease!.Value > 0)
+            {
+                harmony.PatchAll(typeof(ItemExperiencePatch));
+            }
+
             // ### Animal ###
             if (ConfigManager.AnimalDailyFriendshipGain!.Value > 0 || ConfigManager.PetDailyFriendshipGain!.Value > 0)
             {

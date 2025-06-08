@@ -12,6 +12,7 @@ namespace UsefullPatches
         private static string cGather = "Gather";
         private static string cField = "Field";
         private static string cNPC = "NPC";
+        private static string cFarming = "Farming";
 
         // ### General ###
         public static ConfigEntry<bool>? EnableMod;
@@ -22,11 +23,15 @@ namespace UsefullPatches
         public static ConfigEntry<int>? PetDailyFriendshipGain;
         public static ConfigEntry<bool>? DisableAnimalSickness;
 
+        // ### Farming ###
+        public static ConfigEntry<int>? FarmingExperienceIncrease;
+
         // ### Fishing ###
         public static ConfigEntry<bool>? EnableInstantHookFish;
         public static ConfigEntry<float>? HitModeFocusBuildUp;
         public static ConfigEntry<float>? HitModeTensionBuildUp;
         public static ConfigEntry<float>? HitModeDetectionBuildUp;
+        public static ConfigEntry<int>? FishingExperienceIncrease;
 
         // ### Player ###
         public static ConfigEntry<float>? SpeedMultiplier;
@@ -62,11 +67,15 @@ namespace UsefullPatches
             PetDailyFriendshipGain = config.Bind(cAnimal, "PetDailyFriendshipGain", -1, " Adds daily friendship gain to pets.\n value of 20 would be equal to feeding a animal with grain\n -1 Disabled.\n Use int numbers (1).");
             DisableAnimalSickness = config.Bind(cAnimal, "DisableAnimalSickness", false, " Disable animal sickness.");
 
+            // ### Farming ###
+            FarmingExperienceIncrease = config.Bind(cFarming, "FarmingExperienceIncrease", -1, " Increases the farming (trees & harvastables) experience/optained count.\n -1 Disabled.\n value > 1 = more experience.\n A value of the 2 would double your experience gained per fruit/harvestable, value of 3 triple, and so on.\n Use int numbers (1).");
+
             // ### Fishing ###
             EnableInstantHookFish = config.Bind(cFishing, "EnableInstantHookFish", false, " Enable instant catch fish in hook minigame. !!Experimental!!");
             HitModeFocusBuildUp = config.Bind(cFishing, "HitModeFocusBuildUp", -1f, " Adjust hit fishing minigame focus increase.\n -1 Disabled.\n 0 Instant Catch.\n value < 1f = slower increase.\n value > 1f = faster.\n Calculation is focusValue * yourValue.\n Use float numbers (1.0).");
             HitModeTensionBuildUp = config.Bind(cFishing, "HitModeTensionBuildUp", -1f, " Adjust hit fishing minigame tension increase.\n -1 Disabled.\n 0 Disable tension build up.\n value < 1f = slower increase.\n value > 1f = faster.\n Calculation is tensionValue * yourValue.\n Use float numbers (1.0).");
             HitModeDetectionBuildUp = config.Bind(cFishing, "HitModeDetectionBuildUp", -1f, " Adjust hit fishing minigame detection increase.\n -1 Disabled.\n 0 Disable detection build up.\n value < 1.0f = slower increase.\n value > 1f = faster.\n Calculation is detectionValue * yourValue.\n Use float numbers (1.0).");
+            FishingExperienceIncrease = config.Bind(cFishing, "FishingExperienceIncrease", -1, " Increases the fish experience/optained count.\n -1 Disabled.\n value > 1 = more experience.\n A value of the 2 would double your experience gained per fish, value of 3 triple, and so on.\n Use int numbers (1).");
 
             // ### Player ###
             SpeedMultiplier = config.Bind(cPlayer, "SpeedMultiplier", -1f, " Increase/Decrease player speed.\n -1 Disabled.\n value > 1f = faster.\n value < 1f = slower.\n Calculation is speed * yourValue.\n Use float numbers (1.0).");
