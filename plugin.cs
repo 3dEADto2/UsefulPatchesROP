@@ -45,7 +45,7 @@ namespace UsefullPatches
             }
 
             // ### Shared Patches ###
-            if (ConfigManager.FishingExperienceIncrease!.Value > 0 || ConfigManager.FarmingExperienceIncrease!.Value > 0)
+            if (ConfigManager.FishingExperienceIncrease!.Value > 0 || ConfigManager.FarmingExperienceIncrease!.Value > 0 || ConfigManager.BugExperienceIncrease!.Value > 0)
             {
                 harmony.PatchAll(typeof(ItemExperiencePatch));
             }
@@ -60,8 +60,6 @@ namespace UsefullPatches
             {
                 harmony.PatchAll(typeof(AnimalSicknessPatch));
             }
-
-            harmony.PatchAll(typeof(AnimalSicknessPatch));
 
             // ### Fishing ###
             if (ConfigManager.EnableInstantHookFish!.Value)
@@ -104,6 +102,11 @@ namespace UsefullPatches
             if(ConfigManager.InfiniteWaterTool!.Value)
             {
                 harmony.PatchAll(typeof(InfiniteWaterTool));
+            }
+
+            if (ConfigManager.InfiniteOcarinaTool!.Value)
+            {
+                harmony.PatchAll(typeof(InfiniteOcarinaTool));
             }
 
             if (ConfigManager.ToolHardness!.Value > 0)

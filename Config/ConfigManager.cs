@@ -25,6 +25,7 @@ namespace UsefullPatches
 
         // ### Farming ###
         public static ConfigEntry<int>? FarmingExperienceIncrease;
+        public static ConfigEntry<int>? BugExperienceIncrease;
 
         // ### Fishing ###
         public static ConfigEntry<bool>? EnableInstantHookFish;
@@ -44,6 +45,7 @@ namespace UsefullPatches
         public static ConfigEntry<int>? ToolHardness;
         public static ConfigEntry<bool>? TreeHitReq;
         public static ConfigEntry<bool>? InfiniteWaterTool;
+        public static ConfigEntry<bool>? InfiniteOcarinaTool;
 
         // ### Field ###
         public static ConfigEntry<bool>? FieldSpawnResource;
@@ -69,6 +71,7 @@ namespace UsefullPatches
 
             // ### Farming ###
             FarmingExperienceIncrease = config.Bind(cFarming, "FarmingExperienceIncrease", -1, " Increases the farming (trees & harvastables) experience/optained count. !!Experimental!!\n -1 Disabled.\n value > 1 = more experience.\n A value of the 2 would double your experience gained per fruit/harvestable, value of 3 triple, and so on.\n Use int numbers (1).");
+            BugExperienceIncrease = config.Bind(cFarming, "BugExperienceIncrease", -1, " Increases the bug minigame experience/optained count. !!Experimental!!\n -1 Disabled.\n value > 1 = more experience.\n A value of the 2 would double your experience gained per bug, value of 3 triple, and so on.\n Use int numbers (1).");
 
             // ### Fishing ###
             EnableInstantHookFish = config.Bind(cFishing, "EnableInstantHookFish", false, " Enable instant catch fish in hook minigame. !!Experimental!!");
@@ -88,6 +91,7 @@ namespace UsefullPatches
             ToolHardness = config.Bind(cGather, "ToolHardness", -1, " Sets the hardness of tools.\n High numbers lead to instant break/chop.\n -1 Disabled.\n Use int numbers (1).");
             TreeHitReq = config.Bind(cGather, "TreeHitReq", false, " Disable the tool requirement for trees !!Experimental!!");
             InfiniteWaterTool = config.Bind(cGather, "InfiniteWaterTool", false, " Enable infinte water for watertools.");
+            InfiniteOcarinaTool = config.Bind(cGather, "InfiniteOcarinaTool", false, " Enable infinte charges for ocarina tool.");
 
             // ### Field ###
             FieldSpawnResource = config.Bind(cField, "FieldSpawnResource", false, " Disable resource spawn on field. !!experimental!!");

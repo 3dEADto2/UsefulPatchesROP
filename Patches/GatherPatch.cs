@@ -137,6 +137,21 @@ namespace UsefullPatches.Patches
         }
     }
 
+    [HarmonyPatch(typeof(OcarinaToolItem), nameof(OcarinaToolItem.Use))]
+    internal class  InfiniteOcarinaTool
+    {
+        [HarmonyPrefix]
+        public static bool Prefix(ref bool __result)
+        {
+            __result = true;
+            if (ConfigManager.EnableLogging!.Value)
+            {
+                UsefullPatchesMain.Log?.LogInfo("OcarinaToolCharges ignored!");
+            }
+            return false;
+        }
+    }
+
     [HarmonyPatch(typeof(TreeEntity), nameof(TreeEntity.Hit))]
     public static class TreeHitPatch
     {
